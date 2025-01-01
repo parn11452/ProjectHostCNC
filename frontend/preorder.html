@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>แกลเลอรี CNC และ Preorder วัสดุ CNC</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts: Prompt -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        font-family: "Prompt", sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .navbar {
+        background-color: #111175;
+      }
+
+      header {
+        background-color: #111175;
+        padding: 20px 0;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 2.5rem;
+      }
+
+      .album {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .card:hover {
+        transform: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container px-2">
+        <a class="navbar-brand" href="#">
+          <img src="./logo.png" alt="Logo" style="height: 40px" />
+        </a>
+        <span style="color: #f8f9fa">ห้างหุ้นส่วนจำกัด รินทร์ศิลป์ โฆษณา</span>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="promotion.html">โปรโมชั่น</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="materials.html">วัสดุ</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="gallery.html">ผลงานของเรา</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="preorder.html">สั่งทำสินค้า</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="check-order.html">รายการสั่งทำ</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                ><span id="userName">User</span></a
+              >
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="login.html"
+                    id="login-button"
+                    style="display: none"
+                    >เข้าสู่ระบบ</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" id="logout-button"
+                    >ออกจากระบบ</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="text-white text-center py-4">
+      <h1>สั่งทำสินค้า</h1>
+    </header>
+
+    <section class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h3 class="card-title text-center mb-4">
+                แบบฟอร์มการสั่งทำสินค้า
+              </h3>
+              <form id="preorderForm">
+                <div class="mb-3">
+                  <label for="name" class="form-label"
+                    >ชื่อ - นามสกุล <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="ชื่อ นามสกุล"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label"
+                    >อีเมล <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="name@gmail.com"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label"
+                    >เบอร์โทรศัพท์ <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    placeholder="062XXXXXXX"
+                    required
+                    pattern="[0-9]{10}"
+                    title="กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 ตัวเลข"
+                    maxlength="10"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="material" class="form-label"
+                    >เลือกวัสดุที่ต้องการ
+                    <span class="text-danger">*</span></label
+                  >
+                  <select class="form-select" id="material" required></select>
+                </div>
+                <div class="mb-3">
+                  <label for="quantity" class="form-label"
+                    >จำนวน <span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="quantity"
+                    placeholder="กรุณาระบุจำนวน"
+                    required
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="notes" class="form-label"
+                    >หมายเหตุเพิ่มเติม</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="notes"
+                    placeholder="กรุณาระบุหมายเหตุ"
+                    rows="3"
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="address" class="form-label"
+                    >ที่อยู่ <span class="text-danger">*</span></label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="address"
+                    rows="3"
+                    placeholder="กรุณาระบุที่อยู่"
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="payment" class="form-label"
+                    >ช่องทางการชำระเงิน
+                    <span class="text-danger">*</span></label
+                  >
+                  <select class="form-select" id="payment" required>
+                    <option value="" disabled selected>
+                      กรุณาเลือกช่องทางการชำระเงิน
+                    </option>
+                    <option value="bank_transfer">โอนผ่านธนาคาร</option>
+                  </select>
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">
+                    ส่งคำสั่งทำ
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="col-lg-3">
+          <div class="card shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title">Line ของทางร้าน</h5>
+              <img src="./Lineqr.png" alt="QR Code" class="img-fluid mb-3" />
+              <p>
+                สแกน QR Code เพื่อติดต่อ<br />
+                สอบถามหรือส่งหลักฐานการโอนเงิน
+              </p>
+            </div>
+          </div>
+          <p class="mt-3 text-muted">
+            * รายละเอียดการสั่งทำ
+            หรือไฟล์การออกแบบของสินค้าสามารถส่งไฟล์ผ่านทางไลน์<br />
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal for confirmation -->
+    <div
+      class="modal fade"
+      id="confirmationModal"
+      tabindex="-1"
+      aria-labelledby="confirmationModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmationModalLabel">
+              ยืนยันคำสั่งทำ
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>คุณต้องการยืนยันการสั่งทำสินค้าใช่หรือไม่?</p>
+            <p>ราคาสินค้ารวมทั้งสิ้น <span id="orderTotalPrice"></span> บาท</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              ยกเลิก
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="confirmOrderButton"
+            >
+              ยืนยัน
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let materials = [];
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const userName = localStorage.getItem("name");
+        const userNameElement = document.getElementById("userName");
+        const logoutButton = document.getElementById("logout-button");
+        const loginButton = document.getElementById("login-button");
+
+        if (!userName) {
+          userNameElement.textContent = "เข้าสู่ระบบ";
+          loginButton.style.display = "block";
+          logoutButton.style.display = "none";
+        } else {
+          userNameElement.textContent = userName;
+          loginButton.style.display = "none";
+          logoutButton.style.display = "block";
+        }
+
+        const materialSelect = document.getElementById("material");
+        const preorderForm = document.getElementById("preorderForm");
+        const confirmationModal = new bootstrap.Modal(
+          document.getElementById("confirmationModal")
+        );
+        const orderTotalPriceSpan = document.getElementById("orderTotalPrice");
+        const confirmOrderButton =
+          document.getElementById("confirmOrderButton");
+
+        try {
+          const response = await fetch("http://localhost:5001/api/materials");
+          if (!response.ok) throw new Error("Failed to fetch materials.");
+          materials = await response.json();
+
+          materials.forEach((material) => {
+            const option = document.createElement("option");
+            option.value = material._id;
+            option.textContent = `${material.name} - ${material.size} - ${material.thickness} - ${material.price} บาท`;
+
+            materialSelect.appendChild(option);
+          });
+        } catch (error) {
+          console.error("Error loading materials:", error);
+        }
+
+        preorderForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const phone = document.getElementById("phone").value;
+          const materialId = document.getElementById("material").value;
+          const quantity = document.getElementById("quantity").value;
+          const notes = document.getElementById("notes").value;
+          const address = document.getElementById("address").value;
+          const paymentMethod = document.getElementById("payment").value;
+
+          const selectedMaterial = materials.find(
+            (material) => material._id === materialId
+          );
+          const totalPrice = selectedMaterial.price * quantity;
+          orderTotalPriceSpan.textContent = totalPrice;
+
+          confirmationModal.show();
+
+          confirmOrderButton.addEventListener("click", async () => {
+            const orderData = {
+              name,
+              email,
+              phone,
+              materialId,
+              quantity,
+              notes,
+              address,
+              paymentMethod,
+            };
+
+            try {
+              const orderResponse = await fetch(
+                "http://localhost:5001/api/orders",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(orderData),
+                }
+              );
+
+              if (!orderResponse.ok) throw new Error("Failed to create order.");
+              const responseData = await orderResponse.json();
+              const orderId = responseData.order._id; // assuming the response has { orderId: "some_id" }
+
+              // Save orderId to localStorage
+              localStorage.setItem("orderId", orderId);
+              console.log(responseData);
+
+              alert("คำสั่งทำสำเร็จ!");
+              confirmationModal.hide();
+              window.location.href = "money.html";
+            } catch (error) {
+              console.error("Error submitting order:", error);
+              alert("เกิดข้อผิดพลาดในการสั่งทำ");
+              confirmationModal.hide();
+            }
+          });
+        });
+      });
+
+      document
+        .getElementById("logout-button")
+        .addEventListener("click", (event) => {
+          event.preventDefault();
+          localStorage.clear();
+          window.location.href = "login.html";
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

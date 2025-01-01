@@ -1,0 +1,59 @@
+/* ใช้ฟอนต์ Prompt จาก Google Fonts */
+body {
+    font-family: 'Prompt', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Header Style */
+header h1 {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+}
+
+/* Card Title */
+.card-title {
+    font-size: 1.5rem;
+}
+
+/* Footer */
+footer {
+    background-color: #111175;
+    font-size: 0.9rem;
+    color: #ffffff;
+}
+
+/* Hover Effect for Cards */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px); /* ขยับการ์ดขึ้นเล็กน้อย */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* เพิ่มเงาเมื่อโฮเวอร์ */
+}
+
+@media (hover: none) {
+    .card {
+        transform: none; /* สำหรับอุปกรณ์ที่ไม่มี hover เช่น มือถือ */
+    }
+}
+
+nav, header {
+    background-color: #111175;
+}
+
+.navbar-dark .nav-link {
+    color: white; /* เปลี่ยนสีตัวอักษรเป็นสีขาว */
+}
+
+.navbar-dark .nav-link:hover {
+    color: #ddd; /* สีที่เปลี่ยนเมื่อโฮเวอร์ */
+}
+
+.navbar-dark .dropdown-item {
+    color: rgb(0, 0, 0); /* เปลี่ยนสีตัวอักษรใน dropdown */
+}
+
+.navbar-dark .dropdown-item:hover {
+    color: #000000; /* สีที่เปลี่ยนเมื่อโฮเวอร์ใน dropdown */
+}
