@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>จัดการวัสดุที่สามารถใช้ในงาน</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: "Prompt", sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #111175;
+        }
+        header {
+            background-color: #111175;
+            padding: 20px 0;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .album {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container px-5">
+            <a class="navbar-brand" href="#">
+                <img src="./logo.png" alt="Logo" style="height: 40px">
+            </a>
+            <span style="color: #f8f9fa">ห้างหุ้นส่วนจำกัด รินทร์ศิลป์ โฆษณา</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="promotion-admin.html">โปรโมชั่น</a></li>
+                    <li class="nav-item"><a class="nav-link" href="materials-admin.html">วัสดุ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gallery-admin.html">ผลงานของเรา</a></li>
+                    <li class="nav-item"><a class="nav-link" href="tableorder-admin.html">จัดการคำสั่งทำ</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="login.html">ออกจากระบบ</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="text-white text-center py-4">
+        <h1>จัดการวัสดุที่สามารถใช้ในงาน</h1>
+    </header>
+
+    <div class="container mt-5">
+        <div style="text-align: right;">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMaterialModal" onclick="resetForm()" >
+                เพิ่มวัสดุใหม่
+            </button>
+        </div>
+    </div>
+    <div class="modal fade" id="addMaterialModal" tabindex="-1" aria-labelledby="addMaterialModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMaterialModalLabel">เพิ่มวัสดุใหม่</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="material-form" enctype="multipart/form-data">
+                        <input type="hidden" id="material-id" />
+                        <div class="mb-3">
+                            <label for="name" class="form-label">ชื่อวัสดุ</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="size" class="form-label">ขนาด</label>
+                            <input type="text" class="form-control" id="size" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="thickness" class="form-label">ความหนา</label>
+                            <input type="text" class="form-control" id="thickness" require>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">ราคา</label>
+                            <input type="number" class="form-control" id="price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">คำอธิบาย</label>
+                            <textarea class="form-control" id="description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">เลือกรูปภาพ</label>
+                            <input type="file" class="form-control" id="image" accept="image/*">
+                        </div>
+                        <div style="text-align: right;">
+                            <button type="submit" class="btn btn-primary btn-success">บันทึกวัสดุ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="album py-4 bg-body-tertiary" style="margin-top: 30px">
+        <section class="container mt-5" id="materials-container">
+            <div class="row" id="material-cards"></div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            async function fetchMaterials() {
+                try {
+                    const response = await fetch("/api/materials");
+                    if (!response.ok) throw new Error("ดึงข้อมูลวัสดุล้มเหลว");
+                    const materials = await response.json();
+                    displayMaterials(materials);
+                } catch (error) {
+                    console.error("เกิดข้อผิดพลาดในการดึงข้อมูลวัสดุ:", error);
+                }
+            }
+
+            // แสดง วัสดุ
+            function displayMaterials(materials) {
+                const materialCardsContainer = document.getElementById("material-cards");
+                materialCardsContainer.innerHTML = "";
+                materials.reverse(); // แสดงวัสดุล่าสุดก่อน
+                materials.forEach((material) => {
+                    const card = document.createElement("div");
+                    card.classList.add("col-md-4", "mb-4");
+                    card.innerHTML = `
+                        <div class="card h-100 shadow-sm d-flex flex-column">
+                            <img src="/${material.image}" class="card-img-top" style="height: 200px" alt="${material.name}" />
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title text-primary">${material.name}</h5>
+                                <h5 class="card-text">ขนาด : ${material.size}</h5>
+                                <h6 class="card-text">หนา : ${material.thickness}</h6>
+                                <h6 class="card-text">ราคา : ${material.price} บาท</h6>
+                                <p class="card-text">${material.description}</p>
+                                <div class="mt-auto" style="text-align: right;">
+                                    <button onclick="editMaterial('${material._id}')" class="btn btn-warning btn-sm">แก้ไข</button>
+                                    <button onclick="deleteMaterial('${material._id}')" class="btn btn-danger btn-sm">ลบ</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    materialCardsContainer.appendChild(card);
+                });
+            }
+
+            // เพิ่ม วัสดุ
+            async function addMaterial(event) {
+                event.preventDefault();
+                const materialId = document.getElementById("material-id").value;
+                const name = document.getElementById("name").value;
+                const size = document.getElementById("size").value;
+                const thickness = document.getElementById("thickness").value;
+                const price = document.getElementById("price").value;
+                const description = document.getElementById("description").value;
+                const imageFile = document.getElementById("image").files[0];
+
+                const formData = new FormData();
+                formData.append("name", name);
+                formData.append("size", size);
+                formData.append("thickness", thickness);
+                formData.append("price", price);
+                formData.append("description", description);
+                if (imageFile) formData.append("image", imageFile);
+
+                const method = materialId ? "PUT" : "POST";
+                const url = materialId
+                  ? `/api/materials/${materialId}`
+                  : "/api/materials";
+
+                try {
+                  const response = await fetch(url, { method: method, body: formData, });
+                  if (!response.ok) throw new Error("การบันทึกวัสดุล้มเหลว");
+                  fetchMaterials();
+                  resetForm();
+                  const modal = bootstrap.Modal.getInstance(document.getElementById("addMaterialModal"));
+                  modal.hide();
+                  alert("บันทึกวัสดุสำเร็จ");
+                } catch (error) {
+                  console.error("เกิดข้อผิดพลาดในการบันทึกวัสดุ:", error);
+                }
+            }
+
+            // แก้ไข วัสดุ
+            window.editMaterial = async function (id) {
+                try {
+                    const response = await fetch(`/api/materials/${id}`);
+                    if (!response.ok) throw new Error("การดึงข้อมูลวัสดุล้มเหลว");
+                    const material = await response.json();
+                    document.getElementById("material-id").value = material._id;
+                    document.getElementById("name").value = material.name;
+                    document.getElementById("size").value = material.size;
+                    document.getElementById("thickness").value = material.thickness;
+                    document.getElementById("price").value = material.price;
+                    document.getElementById("description").value = material.description;
+                    const modal = new bootstrap.Modal(document.getElementById("addMaterialModal"));
+                    modal.show();
+                } catch (error) {
+                    console.error("เกิดข้อผิดพลาดในการแก้ไขวัสดุ:", error);
+                }
+            };
+
+            // ลบ วัสดุ
+            window.deleteMaterial = async function (id) {
+              if (!confirm("คุณต้องการลบวัสดุนี้หรือไม่?")) return;
+
+              try {
+                const response = await fetch(`/api/materials/${id}`, { method: "DELETE" });
+                if (!response.ok) throw new Error("การลบวัสดุล้มเหลว");
+                fetchMaterials();
+                alert("ลบวัสดุสำเร็จ");
+              } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการลบวัสดุ:", error);
+              }
+            };
+
+            function resetForm() {
+                document.getElementById("material-id").value = "";
+                document.getElementById("name").value = "";
+                document.getElementById("size").value = "";
+                document.getElementById("thickness").value = "";
+                document.getElementById("price").value = "";
+                document.getElementById("description").value = "";
+                document.getElementById("image").value = "";
+            }
+
+            document.getElementById("material-form").addEventListener("submit", addMaterial);
+            fetchMaterials();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
